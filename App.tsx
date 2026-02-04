@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { SectionType } from './types';
-import { SECTIONS } from './constants';
+import { SECTION_MUSIC } from './constants';
 import Navbar from './components/Navbar';
 import MusicToggle from './components/MusicToggle';
 import Cover from './components/sections/Cover';
@@ -13,6 +13,8 @@ import SimpleSection from './components/sections/SimpleSection';
 import AwardsSection from './components/sections/AwardsSection';
 import OpeningSection from './components/sections/OpeningSection';
 import ClosingSection from './components/sections/ClosingSection';
+import GamesSection from './components/sections/GamesSection';
+import SpeechSection from './components/sections/SpeechSection';
 
 const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState<SectionType>(SectionType.COVER);
@@ -21,15 +23,16 @@ const App: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Background music management
-    if (activeSection !== SectionType.PERFORMANCE && activeSection !== SectionType.OPENING) {
-      if (isPlaying) {
-        audioRef.current?.play().catch(() => console.log('Autoplay blocked'));
-      } else {
-        audioRef.current?.pause();
-      }
-    } else {
+    const nextTrack = SECTION_MUSIC[activeSection];
+    if (!audioRef.current || !nextTrack) {
       audioRef.current?.pause();
+      return;
+    }
+    audioRef.current.src = nextTrack.url;
+    if (isPlaying) {
+      audioRef.current.play().catch(() => console.log('Autoplay blocked'));
+    } else {
+      audioRef.current.pause();
     }
   }, [isPlaying, activeSection]);
 
@@ -55,13 +58,13 @@ const App: React.FC = () => {
       case SectionType.OPENING:
         return <OpeningSection />;
       case SectionType.SPEECH:
-        return <SimpleSection title="领导致辞" type={SectionType.SPEECH} coverOnly />;
+        return <SpeechSection />;
       case SectionType.AWARDS:
         return <AwardsSection />;
       case SectionType.PERFORMANCE:
         return <PerformanceGrid />;
       case SectionType.GAMES:
-        return <SimpleSection title="互动游戏" type={SectionType.GAMES} />;
+        return <GamesSection />;
       case SectionType.LUCKY_DRAW:
         return <LuckyDraw />;
       case SectionType.CLOSING:
@@ -73,19 +76,26 @@ const App: React.FC = () => {
     }
   };
 
+  const currentMusic = SECTION_MUSIC[activeSection];
+
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-festive text-white selection:bg-yellow-400 selection:text-red-900">
-      <audio 
-        ref={audioRef} 
-        loop 
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" 
-      />
+      <audio ref={audioRef} loop />
 
       <main className={`h-full w-full transition-all duration-700 ease-in-out ${isTransitioning ? 'opacity-0 scale-95 blur-md' : 'opacity-100 scale-100 blur-0'}`}>
         {renderSection()}
       </main>
 
-      <MusicToggle isPlaying={isPlaying} onToggle={toggleMusic} />
+      {currentMusic && (
+        <MusicToggle
+          isPlaying={isPlaying}
+          onToggle={toggleMusic}
+          label={currentMusic.label}
+          accent={currentMusic.accent}
+          glow={currentMusic.glow}
+          bar={currentMusic.bar}
+        />
+      )}
       
       <Navbar 
         activeSection={activeSection} 

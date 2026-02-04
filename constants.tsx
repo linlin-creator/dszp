@@ -15,6 +15,79 @@ export const SECTIONS = [
   { id: SectionType.BANQUET, label: '晚宴交流' },
 ];
 
+export const SECTION_MUSIC = {
+  [SectionType.COVER]: {
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+    label: '序曲 · 曙光',
+    accent: 'from-white via-neutral-300 to-black',
+    glow: 'shadow-[0_10px_40px_rgba(255,255,255,0.25)]',
+    bar: 'bg-white'
+  },
+  [SectionType.SIGN_IN]: {
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
+    label: '入场 · 回声',
+    accent: 'from-white via-neutral-300 to-black',
+    glow: 'shadow-[0_10px_40px_rgba(255,255,255,0.25)]',
+    bar: 'bg-white'
+  },
+  [SectionType.WARM_UP]: {
+    url: '/当此刻听见你我.mp3',
+    label: '暖场 · 火线',
+    accent: 'from-white via-neutral-300 to-black',
+    glow: 'shadow-[0_10px_40px_rgba(255,255,255,0.25)]',
+    bar: 'bg-white'
+  },
+  [SectionType.OPENING]: {
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
+    label: '开场 · 星环',
+    accent: 'from-white via-neutral-300 to-black',
+    glow: 'shadow-[0_10px_40px_rgba(255,255,255,0.25)]',
+    bar: 'bg-white'
+  },
+  [SectionType.SPEECH]: {
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
+    label: '致辞 · 远航',
+    accent: 'from-white via-neutral-300 to-black',
+    glow: 'shadow-[0_10px_40px_rgba(255,255,255,0.25)]',
+    bar: 'bg-white'
+  },
+  [SectionType.AWARDS]: {
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3',
+    label: '荣耀 · 星冕',
+    accent: 'from-white via-neutral-300 to-black',
+    glow: 'shadow-[0_10px_40px_rgba(255,255,255,0.25)]',
+    bar: 'bg-white'
+  },
+  [SectionType.GAMES]: {
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3',
+    label: '互动 · 节拍',
+    accent: 'from-white via-neutral-300 to-black',
+    glow: 'shadow-[0_10px_40px_rgba(255,255,255,0.25)]',
+    bar: 'bg-white'
+  },
+  [SectionType.LUCKY_DRAW]: {
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3',
+    label: '抽奖 · 引擎',
+    accent: 'from-white via-neutral-300 to-black',
+    glow: 'shadow-[0_10px_40px_rgba(255,255,255,0.25)]',
+    bar: 'bg-white'
+  },
+  [SectionType.CLOSING]: {
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3',
+    label: '收场 · 星潮',
+    accent: 'from-white via-neutral-300 to-black',
+    glow: 'shadow-[0_10px_40px_rgba(255,255,255,0.25)]',
+    bar: 'bg-white'
+  },
+  [SectionType.BANQUET]: {
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3',
+    label: '晚宴 · 微醺',
+    accent: 'from-white via-neutral-300 to-black',
+    glow: 'shadow-[0_10px_40px_rgba(255,255,255,0.25)]',
+    bar: 'bg-white'
+  }
+};
+
 export const PERFORMANCES: Performance[] = [
   {
     id: 'p1',
@@ -72,7 +145,7 @@ export const PARTICIPANTS: Participant[] = [
 
 export const AWARDS_DATA = [
   { title: "优秀团队奖", dept: "市场销售部", rep: "李翔" },
-  { title: "优秀个人奖", items: [
+  { title: "先进个人奖", items: [
       { name: "陈勇", dept: "技术研发部" },
       { name: "尤迪", dept: "数据战略部" },
       { name: "关磊", dept: "总经办" }
@@ -80,7 +153,7 @@ export const AWARDS_DATA = [
   },
   { title: "卓越奖", dept: "市场拓展部", rep: "袁颖" },
   { title: "星启奖", dept: "综合办公室", rep: "黄雨乐" },
-  { title: "奥斯卡最佳演员奖", dept: "董事长", rep: "朱一飞" }
+  { title: "奥斯卡奖", dept: "董事长", rep: "朱一飞" }
 ];
 
 export const PRIZES: Prize[] = [

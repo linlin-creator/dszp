@@ -7,10 +7,19 @@ const PerformanceGrid: React.FC = () => {
   const [selectedPerformance, setSelectedPerformance] = useState<Performance | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleOpen = (p: Performance) => {
     setSelectedPerformance(p);
     setIsPlaying(false);
+  };
+
+  const goPrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + PERFORMANCES.length) % PERFORMANCES.length);
+  };
+
+  const goNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % PERFORMANCES.length);
   };
 
   const toggleMusic = () => {
@@ -25,35 +34,65 @@ const PerformanceGrid: React.FC = () => {
 
   return (
     <div className="h-full w-full flex flex-col p-6 md:p-12 lg:p-16 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.12),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(255,58,58,0.18),transparent_60%)]" />
+        <div className="absolute inset-0 opacity-40 bg-[linear-gradient(90deg,rgba(255,215,0,0.08)_1px,transparent_1px),linear-gradient(rgba(255,215,0,0.08)_1px,transparent_1px)] bg-[length:48px_48px] performance-float" />
+      </div>
+
       <div className="mb-10 text-center shrink-0">
         <span className="text-yellow-400 text-xs font-black tracking-[0.5em] uppercase mb-2 block">Stage Program</span>
         <h2 className="text-5xl md:text-7xl font-black tracking-tighter gradient-text-gold inline-block mb-2">节目表演</h2>
         <p className="text-white/40 text-lg font-light">马鸣风萧萧，智领舞台秀</p>
       </div>
 
-      <div className="flex-1 overflow-y-auto custom-scroll pr-2 pb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {PERFORMANCES.map((p) => (
-            <div 
-              key={p.id}
-              onClick={() => handleOpen(p)}
-              className="group relative h-[22rem] rounded-[2.5rem] overflow-hidden glass-card cursor-pointer hover:border-yellow-400/50"
-            >
-              <img 
-                src={p.cover} 
-                alt={p.title} 
-                className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-red-950 via-red-900/40 to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8">
-                <span className="px-4 py-1 bg-yellow-400 text-red-900 text-[10px] font-black tracking-widest uppercase mb-4 inline-block rounded-full">
-                  {p.type}
-                </span>
-                <h3 className="text-3xl font-black mb-2 tracking-tight group-hover:text-yellow-400 transition-colors">{p.title}</h3>
-                <p className="text-sm text-white/50 font-medium">参演: {p.performers.join('、')}</p>
-              </div>
+      <div className="flex-1 flex items-center justify-center pb-24">
+        <div className="w-full max-w-5xl flex flex-col items-center gap-10">
+          <div 
+            onClick={() => handleOpen(PERFORMANCES[currentIndex])}
+            className="group relative h-[26rem] w-full max-w-3xl cursor-pointer rounded-[2.8rem] glass-card border border-yellow-400/10 hover:border-yellow-400/40 transition-all duration-500 overflow-hidden hover:scale-[1.01]"
+          >
+            <div className="absolute -top-12 -right-8 h-40 w-40 rounded-full border border-yellow-300/20 performance-orbit" />
+            <div className="absolute -bottom-10 -left-6 h-32 w-32 rounded-full border border-yellow-300/15 performance-orbit" />
+            <div className="absolute inset-0 bg-gradient-to-br from-red-950 via-black/70 to-red-950" />
+            <div className="absolute inset-0 opacity-60 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.2),transparent_60%)]" />
+            <div className="absolute inset-0 performance-sheen">
+              <div className="absolute inset-y-0 left-1/2 w-[45%] -translate-x-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             </div>
-          ))}
+            <div className="absolute inset-0">
+              <div className="absolute inset-10 rounded-[2rem] border border-yellow-300/20" />
+              <div className="absolute inset-16 rounded-[1.6rem] border border-yellow-300/10" />
+            </div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <span className="text-yellow-400 text-xs font-black tracking-[0.6em] uppercase mb-5">Secret Program</span>
+              <h3 className="text-4xl md:text-5xl font-black tracking-tight gradient-text-gold mb-4">点击揭晓</h3>
+              <p className="text-sm text-white/60 font-medium">直接进入节目详情</p>
+            </div>
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-10 left-12 h-2 w-2 rounded-full bg-yellow-200/60 performance-sparkle" />
+              <div className="absolute top-24 right-20 h-1.5 w-1.5 rounded-full bg-white/60 performance-sparkle" />
+              <div className="absolute bottom-20 right-12 h-2 w-2 rounded-full bg-yellow-300/60 performance-sparkle" />
+              <div className="absolute bottom-12 left-20 h-1.5 w-1.5 rounded-full bg-white/50 performance-sparkle" />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6 text-white/70">
+            <button
+              onClick={goPrev}
+              className="px-6 py-3 rounded-full border border-white/10 hover:border-yellow-400/40 hover:text-yellow-300 transition-colors"
+            >
+              上一个
+            </button>
+            <div className="text-xs tracking-[0.4em] uppercase">
+              {currentIndex + 1} / {PERFORMANCES.length}
+            </div>
+            <button
+              onClick={goNext}
+              className="px-6 py-3 rounded-full border border-white/10 hover:border-yellow-400/40 hover:text-yellow-300 transition-colors"
+            >
+              下一个
+            </button>
+          </div>
         </div>
       </div>
 
