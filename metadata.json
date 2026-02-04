@@ -1,0 +1,7 @@
+{
+  "name": "Zhipu Technology 2026 Year of the Horse Gala",
+  "description": "A premium, Apple-inspired minimalist web application for the 2026 New Year Gala of Nanjing Dashu Zhipu Technology Co., Ltd., featuring interactive segments, a performance gallery, and a dynamic lucky draw system.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
